@@ -26,7 +26,7 @@ export const Service = sequelize.define("services", {
 Service.afterSync(async () => {
   const services = [
     {
-      name: "Vencer el miedo paso a paso, en un espacio seguro",
+      name: "Sin Miedos",
       description:
         "Terapia de exposición con realidad virtual para enfrentar fobias y ansiedad social",
       items: [
@@ -38,8 +38,9 @@ Service.afterSync(async () => {
       ],
     },
     {
-      name: "Conecta, expresa y cree en ti",
-      description: "Entrenamiento en habilidades sociales y autoestima con RV",
+      name: "Socialízate",
+      description:
+        "Entrenamiento en habilidades sociales y autoestima con RV, conecta, expresa y cree en ti mismo",
       items: [
         "Práctica de interacciones sociales en entornos simulados",
         "Escenarios como entrevistas, presentaciones y conversaciones cotidianas",
@@ -49,8 +50,9 @@ Service.afterSync(async () => {
       ],
     },
     {
-      name: "Comprender tus emociones, vivir con más calma",
-      description: "Gestión emocional y regulación de ansiedad asistida por IA",
+      name: "Emociónate",
+      description:
+        "Gestión emocional y regulación de ansiedad asistida por IA, Comprender tus emociones, vivir con más calma",
       items: [
         "Sesiones de identificación y manejo emocional con un terapeuta",
         "Plataforma con IA que acompaña entre sesiones",
@@ -60,8 +62,9 @@ Service.afterSync(async () => {
       ],
     },
     {
-      name: "Aprende a cuidarte cuando todo parece demasiado",
-      description: "Programa personalizado para el manejo del estrés",
+      name: "Relájate",
+      description:
+        "Programa personalizado para el manejo del estrés, aprende a cuidarte cuando todo parece demasiado",
       items: [
         "Terapia para enfrentar el estrés diario con TCC adaptada",
         "Estrategias de organización del tiempo y autocuidado emocional",
@@ -71,8 +74,9 @@ Service.afterSync(async () => {
       ],
     },
     {
-      name: "Crecer juntos, compartir y fortalecerte",
-      description: "Talleres grupales de inteligencia emocional y autoestima",
+      name: "Conéctate",
+      description:
+        "Talleres grupales de inteligencia emocional y autoestima. Crecer, compartir y fortalecerte",
       items: [
         "Espacios grupales guiados por un psicólogo",
         "Dinámicas para trabajar empatía, autoestima y resolución de conflictos",
