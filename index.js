@@ -10,7 +10,7 @@ async function main() {
     );
 
      await sequelize.sync({ force: true });
-     await seedAll();
+    //  await seedAll();
 
     // await sequelize.sync({ alter: true });
 
