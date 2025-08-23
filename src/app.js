@@ -12,7 +12,7 @@ const app = express();
 
 // ⚡ Configurar CORS
 const corsOptions = {
-  origin: ["http://localhost:5173", "http://localhost:5174"],
+  origin: ["http://localhost:5173", "https://cielp.vercel.app"],
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
@@ -31,5 +31,9 @@ app.use("/api/cielp/v1/users", userRoutes);
 app.use("/api/cielp/v1/patients", patientRoutes);
 app.use("/api/cielp/v1/userInformation", userInformationRoutes);
 app.use("/api/cielp/v1/services", servicesRoutes);
+
+app.use("/welcome", (_, res) => {
+  res.send("Bienvenido a CIELP API");
+});
 
 export default app;
