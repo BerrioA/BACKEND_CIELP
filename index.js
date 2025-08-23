@@ -9,10 +9,10 @@ async function main() {
       "✅ La conexión con la base de datos se ha realizado con éxito."
     );
 
-    //  await sequelize.sync({ force: true });
+     await sequelize.sync({ force: true });
     //  await seedAll();
 
-    await sequelize.sync({ alter: true });
+    // await sequelize.sync({ alter: true });
 
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
