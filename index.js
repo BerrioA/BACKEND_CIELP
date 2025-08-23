@@ -9,8 +9,8 @@ async function main() {
       "✅ La conexión con la base de datos se ha realizado con éxito."
     );
 
-    // await sequelize.sync({ force: true });
-    // await seedAll();
+     await sequelize.sync({ force: true });
+     await seedAll();
 
     // await sequelize.sync({ alter: true });
 
