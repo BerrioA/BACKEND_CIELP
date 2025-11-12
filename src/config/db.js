@@ -1,12 +1,7 @@
 import { Sequelize } from "sequelize";
+import { POSTGRES_URL } from "./env.js";
 
-export const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
-  {
-    host: process.env.HOST,
-    dialect: process.env.DB_DIALECT,
-    logging: false,
-  }
-);
+export const sequelize = new Sequelize(POSTGRES_URL, {
+  dialect: "postgres",
+  logging: false,
+});
