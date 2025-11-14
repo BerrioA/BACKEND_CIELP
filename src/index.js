@@ -1,7 +1,7 @@
 import app from "./app.js";
 import { sequelize } from "./config/db.js";
 import { NODE_ENV, PORT } from "./config/env.js";
-import { migrator } from "./config/umzugConfig.js";
+import { migrator, seeder } from "./config/umzugConfig.js";
 import "./models/relations.model.js";
 
 async function main() {
@@ -15,6 +15,7 @@ async function main() {
     // await seedAll();
 
     await migrator.up();
+    await seeder.up();
 
     if (NODE_ENV !== "test") {
       app.listen(PORT, () => {

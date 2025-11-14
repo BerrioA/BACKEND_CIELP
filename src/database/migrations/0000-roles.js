@@ -44,4 +44,3 @@ export async function up({ context }) {
 export async function down({ context }) {
   await context.dropTable("roles");
 }
-
