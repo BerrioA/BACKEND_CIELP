@@ -1,7 +1,8 @@
-import app from "./src/app.js";
-import { sequelize } from "./src/config/db.js";
-import { NODE_ENV, PORT } from "./src/config/env.js";
-import "./src/models/relations.model.js";
+import app from "./app.js";
+import { sequelize } from "./config/db.js";
+import { NODE_ENV, PORT } from "./config/env.js";
+import { migrator } from "./config/umzugConfig.js";
+import "./models/relations.model.js";
 
 async function main() {
   try {
@@ -13,7 +14,7 @@ async function main() {
     // await sequelize.sync({ force: true });
     // await seedAll();
 
-    // await sequelize.sync({ alter: true });
+    await migrator.up();
 
     if (NODE_ENV !== "test") {
       app.listen(PORT, () => {
