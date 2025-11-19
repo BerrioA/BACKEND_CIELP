@@ -1,8 +1,8 @@
 import { Role } from "./roles.model.js";
 import { User } from "./user.model.js";
-import { AdditionalInformation } from "./additional.information.js";
-import { LegalRepresentative } from "./legal.representative.js";
-import { RecoveryToken } from "./recovery.tokens.js";
+import { AdditionalInformation } from "./additional.information.model.js";
+import { LegalRepresentative } from "./legal.representative.model.js";
+import { RecoveryToken } from "./recovery.tokens.model.js";
 import { Service } from "./services.model.js";
 
 // Un rol tiene muchos usuarios

@@ -1,4 +1,4 @@
-import { authLogin, authLogout } from "../services/auth.service.js";
+import { authLogin, authLogout } from "../services/index.js";
 
 export const login = async (req, res) => {
   try {
@@ -13,7 +13,6 @@ export const login = async (req, res) => {
     });
   }
 };
-
 
 export const logout = async (req, res) => {
   try {

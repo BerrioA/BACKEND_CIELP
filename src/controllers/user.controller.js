@@ -1,5 +1,5 @@
 import { validationResult } from "express-validator";
-import { getUserProfile, registerUser } from "../services/user.service.js";
+import { getUserProfile, registerUser } from "../services/index.js";
 
 export const createUser = async (req, res) => {
   try {

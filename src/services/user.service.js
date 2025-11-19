@@ -1,9 +1,9 @@
 import bcrypt from "bcryptjs";
 import { sequelize } from "../config/db.js";
 import { User } from "../models/user.model.js";
-import { UserInformation } from "../models/user_information.model.js";
+import { AdditionalInformation } from "../models/additional.information.model.js";
 import { Service } from "../models/services.model.js";
-import { Rol } from "../models/roles.model.js";
+import { Role } from "../models/roles.model.js";
 
 export const registerUser = async (userData) => {
   const {
@@ -57,7 +57,7 @@ export const registerUser = async (userData) => {
     );
 
     // Crear la información del usuario con relación al servicio
-    await UserInformation.create(
+    await AdditionalInformation.create(
       {
         userId: newUser.id,
         serviceId: service.id,
@@ -78,7 +78,7 @@ export const registerUser = async (userData) => {
 export const getUserProfile = async (uid) => {
   const user = await User.findByPk(uid, {
     include: {
-      model: Rol,
+      model: Role,
       as: "role",
       attributes: ["role"],
     },

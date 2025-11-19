@@ -1,6 +1,7 @@
 import bcryptjs from "bcryptjs";
-import { User } from "../models/user.model.js";
+import { User } from "../models/index.js";
 import { generateRefreshToken, generateToken } from "../utils/tokenManager.js";
+import { NODE_ENV } from "../config/env.js";
 
 // Servicio para iniciar sesión
 export const authLogin = async (userAuth, res) => {
@@ -25,8 +26,6 @@ export const authLogin = async (userAuth, res) => {
   };
 };
 
-
-
 // Servicio para cerrar sesión
 export const authLogout = (req, res) => {
   // Si no hay token, simplemente salir
@@ -37,7 +36,7 @@ export const authLogout = (req, res) => {
   // Limpiar cookie
   res.clearCookie("refreshToken", {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: NODE_ENV === "production",
     sameSite: "strict",
   });
 

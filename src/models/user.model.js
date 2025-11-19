@@ -60,21 +60,21 @@ export const User = sequelize.define("users", {
   },
 });
 
-// Hook para asignar automáticamente el rol de Paciente a nuevos usuarios
-User.beforeCreate(async (user) => {
-  if (!user.roleId) {
-    try {
-      const patientRol = await Role.findOne({
-        where: { name: "patient" },
-      });
+// // Hook para asignar automáticamente el rol de Paciente a nuevos usuarios
+// User.beforeCreate(async (user) => {
+//   if (!user.roleId) {
+//     try {
+//       const patientRol = await Role.findOne({
+//         where: { name: "patient" },
+//       });
 
-      if (patientRol) {
-        user.role_id = patientRol.id;
-      } else {
-        console.error("No se encontró el rol de Paciente");
-      }
-    } catch (error) {
-      console.error("Error al asignar rol por defecto:", error);
-    }
-  }
-});
+//       if (patientRol) {
+//         user.role_id = patientRol.id;
+//       } else {
+//         console.error("No se encontró el rol de Paciente");
+//       }
+//     } catch (error) {
+//       console.error("Error al asignar rol por defecto:", error);
+//     }
+//   }
+// });
