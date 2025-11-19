@@ -1,14 +1,24 @@
 import { DataTypes } from "sequelize";
 
 export async function up({ context }) {
-  await context.createTable("legal_representative", {
+  await context.createTable("legal_representatives", {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
       allowNull: false,
     },
-    user_id: {
+    patient_id: {
+      type: DataTypes.UUID,
+      allowNull: true,
+      references: {
+        model: "users",
+        key: "id",
+      },
+      onUpdate: "CASCADE",
+      onDelete: "SET NULL",
+    },
+    legal_representative_id: {
       type: DataTypes.UUID,
       allowNull: true,
       references: {
@@ -36,5 +46,5 @@ export async function up({ context }) {
 }
 
 export async function down({ context }) {
-  await context.dropTable("legal_representative");
+  await context.dropTable("legal_representatives");
 }

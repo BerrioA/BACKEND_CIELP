@@ -16,6 +16,16 @@ export async function up({ context }) {
       type: DataTypes.STRING,
       allowNull: true,
     },
+    data_privacy_consent: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
+    psychological_treatment_consent: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
     user_id: {
       type: DataTypes.UUID,
       allowNull: true,
@@ -25,6 +35,16 @@ export async function up({ context }) {
       },
       onUpdate: "CASCADE",
       onDelete: "SET NULL",
+    },
+    service_id: {
+      type: DataTypes.UUID,
+      allowNull: true,
+      references: {
+        model: "services",
+        key: "id",
+      },
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
     },
     created_at: {
       type: DataTypes.DATE,

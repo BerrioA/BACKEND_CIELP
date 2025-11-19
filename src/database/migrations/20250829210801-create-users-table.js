@@ -9,12 +9,12 @@ export async function up({ context }) {
       allowNull: false,
     },
     given_name: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.STRING(100),
       allowNull: false,
       unique: true,
     },
     surname: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.STRING(100),
       allowNull: true,
     },
     phone: {
@@ -23,7 +23,7 @@ export async function up({ context }) {
       unique: true,
     },
     email: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.STRING(100),
       allowNull: false,
       unique: true,
     },
@@ -33,7 +33,7 @@ export async function up({ context }) {
     },
     role_id: {
       type: DataTypes.UUID,
-      allowNull: true,
+      allowNull: false,
       references: {
         model: "roles",
         key: "id",

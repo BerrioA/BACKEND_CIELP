@@ -1,29 +1,42 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/db.js";
+import { User } from "./user.model.js";
 
-export const Role = sequelize.define("roles", {
+export const RecoveryToken = sequelize.define("recovery_tokens", {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     allowNull: false,
     primaryKey: true,
   },
-  name: {
-    type: DataTypes.STRING(30),
-    allowNull: false,
-  },
-  description: {
+  code: {
     type: DataTypes.STRING(255),
     allowNull: true,
+    unique: true,
   },
-  created_at: {
+  used: {
+    type: DataTypes.BOOLEAN,
+    allowNull: true,
+    defaultValue: false,
+  },
+  user_id: {
+    type: DataTypes.UUID,
+    allowNull: true,
+    references: {
+      model: User,
+      key: "id",
+    },
+    onUpdate: "CASCADE",
+    onDelete: "SET NULL",
+  },
+  expires_in: {
     type: DataTypes.DATE,
-    allowNull: false, 
+    allowNull: false,
     defaultValue: DataTypes.NOW,
   },
   updated_at: {
     type: DataTypes.DATE,
-    allowNull: false, 
+    allowNull: false,
     defaultValue: DataTypes.NOW,
   },
   deleted_at: {

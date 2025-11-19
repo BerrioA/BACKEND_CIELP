@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/db.js";
-import { Rol } from "./roles.model.js";
+import { Role } from "./roles.model.js";
 
 export const User = sequelize.define("users", {
   id: {
@@ -9,50 +9,54 @@ export const User = sequelize.define("users", {
     allowNull: false,
     primaryKey: true,
   },
-  name: {
-    type: DataTypes.STRING(30),
+  given_name: {
+    type: DataTypes.STRING(100),
     allowNull: false,
   },
-  second_name: {
-    type: DataTypes.STRING(30),
+  surname: {
+    type: DataTypes.STRING(100),
     allowNull: true,
   },
-  last_name: {
-    type: DataTypes.STRING(30),
+  phone: {
+    type: DataTypes.STRING(20),
     allowNull: false,
-  },
-  second_last_name: {
-    type: DataTypes.STRING(30),
-    allowNull: true,
-  },
-  gender: {
-    type: DataTypes.ENUM("Masculino", "Femenino", "Otro"),
-    allowNull: false,
-  },
-  cellphone: {
-    type: DataTypes.STRING(10),
-    allowNull: false,
-    unique: true,
   },
   email: {
-    type: DataTypes.STRING(150),
-    allowNull: false,
-    unique: true,
-    validate: { isEmail: true },
+    type: DataTypes.STRING(100),
+    allowNull: true,
   },
   password: {
     type: DataTypes.STRING(250),
     allowNull: false,
   },
-  roleId: {
+  role_id: {
     type: DataTypes.UUID,
-    allowNull: true,
+    allowNull: false,
     references: {
-      model: Rol,
+      model: Role,
       key: "id",
     },
     onUpdate: "CASCADE",
     onDelete: "CASCADE",
+  },
+  status: {
+    type: DataTypes.ENUM("verified", "pending", "suspended"),
+    allowNull: false,
+    defaultValue: "verified",
+  },
+  created_at: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: DataTypes.NOW,
+  },
+  updated_at: { 
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: DataTypes.NOW,
+  },
+  deleted_at: {
+    type: DataTypes.DATE,
+    allowNull: true,
   },
 });
 
@@ -60,12 +64,12 @@ export const User = sequelize.define("users", {
 User.beforeCreate(async (user) => {
   if (!user.roleId) {
     try {
-      const patientRol = await Rol.findOne({
-        where: { role: "Paciente" },
+      const patientRol = await Role.findOne({
+        where: { name: "patient" },
       });
 
       if (patientRol) {
-        user.roleId = patientRol.id;
+        user.role_id = patientRol.id;
       } else {
         console.error("No se encontró el rol de Paciente");
       }

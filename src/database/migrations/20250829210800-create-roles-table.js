@@ -9,7 +9,7 @@ export async function up({ context }) {
       allowNull: false,
     },
     name: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING(30),
       allowNull: false,
       unique: true,
     },

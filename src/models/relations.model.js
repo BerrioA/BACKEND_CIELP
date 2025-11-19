@@ -1,16 +1,26 @@
-import { Rol } from "./roles.model.js";
+import { Role } from "./roles.model.js";
 import { User } from "./user.model.js";
-import { UserInformation } from "./user_information.model.js";
+import { AdditionalInformation } from "./additional.information.js";
+import { LegalRepresentative } from "./legal.representative.js";
+import { RecoveryToken } from "./recovery.tokens.js";
 import { Service } from "./services.model.js";
 
 // Un rol tiene muchos usuarios
-Rol.hasMany(User, { foreignKey: "roleId" });
-User.belongsTo(Rol, { foreignKey: "roleId" });
+Role.hasMany(User, { foreignKey: "role_id" });
+User.belongsTo(Role, { foreignKey: "role_id" });
 
-// Un usuario tiene una información correspondiente
-User.hasOne(UserInformation, { foreignKey: "userId" });
-UserInformation.belongsTo(User, { foreignKey: "userId" });
+// Un usuario tiene muchos representantes legales
+User.hasMany(LegalRepresentative, { foreignKey: "patient_id" });
+LegalRepresentative.belongsTo(User, { foreignKey: "patient_id" });
+
+// Un usuario tiene una información adicional
+User.hasOne(AdditionalInformation, { foreignKey: "user_id" });
+AdditionalInformation.belongsTo(User, { foreignKey: "user_id" });
 
 // Una información de usuario tiene un servicio relacionado
-UserInformation.belongsTo(Service, { foreignKey: "serviceId" });
-Service.hasMany(UserInformation, { foreignKey: "serviceId" });
+AdditionalInformation.belongsTo(Service, { foreignKey: "service_id" });
+Service.hasMany(AdditionalInformation, { foreignKey: "service_id" });
+
+// Un usuario tiene muchos representantes legales
+User.hasMany(RecoveryToken, { foreignKey: "user_id" });
+RecoveryToken.belongsTo(User, { foreignKey: "user_id" });
