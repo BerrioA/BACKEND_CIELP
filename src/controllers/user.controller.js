@@ -18,14 +18,13 @@ export const createUser = async (req, res) => {
       });
     }
 
-    const user = await registerUser({
+    await registerUser({
       userData,
       representativeData: representativeData || null,
     });
 
     res.status(201).json({
       message: "Usuario registrado exitosamente",
-      user,
     });
   } catch (error) {
     res.status(400).json({ error: error.message });
