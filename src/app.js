@@ -3,7 +3,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import helmet from "helmet";
 import { corsOptions } from "./config/corsOptions.js";
-// import userRoutes from "./routes/user.routes.js";
+import userRoutes from "./routes/user.routes.js";
 // import patientRoutes from "./routes/partient.routes.js";
 // import userInformationRoutes from "./routes/user_information.routes.js";
 // import servicesRoutes from "./routes/services.routes.js";
@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 // Rutas
 
 app.use("/api/cielp/v1/auth", authRoutes);
-// app.use("/api/cielp/v1/users", userRoutes);
+app.use("/api/cielp/v1/users", userRoutes);
 // app.use("/api/cielp/v1/patients", patientRoutes);
 // app.use("/api/cielp/v1/userInformation", userInformationRoutes);
 // app.use("/api/cielp/v1/services", servicesRoutes);

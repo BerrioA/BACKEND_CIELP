@@ -29,7 +29,7 @@ export const User = sequelize.define(
     },
     password: {
       type: DataTypes.STRING(250),
-      allowNull: false,
+      allowNull: true,
     },
     role_id: {
       type: DataTypes.UUID,

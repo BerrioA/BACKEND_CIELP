@@ -29,7 +29,7 @@ export async function up({ context }) {
     },
     password: {
       type: DataTypes.STRING(255),
-      allowNull: false,
+      allowNull: true,
     },
     role_id: {
       type: DataTypes.UUID,

@@ -3,20 +3,29 @@ import { getUserProfile, registerUser } from "../services/index.js";
 
 export const createUser = async (req, res) => {
   try {
-    // Validación de campos desde express-validator
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const user = await registerUser(req.body);
+    // Extraer directamente userData y representativeData del body
+    const { userData, representativeData } = req.body;
+
+    // Validar que userData existe y tiene los campos requeridos
+    if (!userData || !userData.email || !userData.given_name) {
+      return res.status(400).json({
+        error: "Los datos del usuario son requeridos",
+      });
+    }
+
+    const user = await registerUser({
+      userData,
+      representativeData: representativeData || null,
+    });
+
     res.status(201).json({
       message: "Usuario registrado exitosamente",
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-      },
+      user,
     });
   } catch (error) {
     res.status(400).json({ error: error.message });
