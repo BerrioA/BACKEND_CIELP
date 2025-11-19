@@ -50,5 +50,11 @@ export const AdditionalInformation = sequelize.define(
       onUpdate: "CASCADE",
       onDelete: "CASCADE",
     },
+  },
+  {
+    timestamps: true,
+    paranoid: true,
+    underscored: true,
+    tableName: "additional_information",
   }
 );

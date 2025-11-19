@@ -1,40 +1,35 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/db.js";
 
-export const Service = sequelize.define("services", {
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    allowNull: false,
-    primaryKey: true,
+export const Service = sequelize.define(
+  "services",
+  {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      primaryKey: true,
+    },
+    name: {
+      type: DataTypes.STRING(150),
+      allowNull: false,
+    },
+    description: {
+      type: DataTypes.STRING(250),
+      allowNull: false,
+    },
+    items: {
+      type: DataTypes.JSONB,
+      allowNull: false,
+    },
   },
-  name: {
-    type: DataTypes.STRING(150),
-    allowNull: false,
-  },
-  description: {
-    type: DataTypes.STRING(250),
-    allowNull: false,
-  },
-  items: {
-    type: DataTypes.JSONB,
-    allowNull: false,
-  },
-  created_at: {
-    type: DataTypes.DATE,
-    allowNull: false,
-    defaultValue: DataTypes.NOW,
-  },
-  updated_at: {
-    type: DataTypes.DATE,
-    allowNull: false,
-    defaultValue: DataTypes.NOW,
-  },
-  deleted_at: {
-    type: DataTypes.DATE,
-    allowNull: true,
-  },
-});
+  {
+    timestamps: true,
+    paranoid: true,
+    underscored: true,
+    tableName: "services",
+  }
+);
 
 // Hook para insertar servicios después de sincronizar la tabla
 // Service.afterSync(async () => {

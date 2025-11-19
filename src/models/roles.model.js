@@ -1,33 +1,28 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/db.js";
 
-export const Role = sequelize.define("roles", {
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    allowNull: false,
-    primaryKey: true,
+export const Role = sequelize.define(
+  "roles",
+  {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      primaryKey: true,
+    },
+    name: {
+      type: DataTypes.STRING(30),
+      allowNull: false,
+    },
+    description: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+    },
   },
-  name: {
-    type: DataTypes.STRING(30),
-    allowNull: false,
-  },
-  description: {
-    type: DataTypes.STRING(255),
-    allowNull: true,
-  },
-  created_at: {
-    type: DataTypes.DATE,
-    allowNull: false, 
-    defaultValue: DataTypes.NOW,
-  },
-  updated_at: {
-    type: DataTypes.DATE,
-    allowNull: false, 
-    defaultValue: DataTypes.NOW,
-  },
-  deleted_at: {
-    type: DataTypes.DATE,
-    allowNull: true,
-  },
-});
+  {
+    timestamps: true,
+    paranoid: true,
+    underscored: true,
+    tableName: "roles",
+  }
+);
