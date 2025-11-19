@@ -11,7 +11,7 @@ async function main() {
       "✅ La conexión con la base de datos se ha realizado con éxito."
     );
 
-    // await sequelize.sync({ force: true });
+    // await sequelize.sync({ alter: true });
     // await seedAll();
 
     await migrator.up();

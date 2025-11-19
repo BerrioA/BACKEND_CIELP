@@ -12,3 +12,4 @@ export const RATE_LIMIT_MAX = Number(process.env.RATE_LIMIT_MAX);
 export const RATE_LIMIT_WINDOW_MS = Number(process.env.RATE_LIMIT_WINDOW_MS);
 export const SUPERADMIN_EMAIL = process.env.SUPERADMIN_EMAIL;
 export const SUPERADMIN_PASSWORD = process.env.SUPERADMIN_PASSWORD;
+export const SUPERADMIN_PHONE = process.env.SUPERADMIN_PHONE;

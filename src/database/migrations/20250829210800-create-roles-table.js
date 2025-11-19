@@ -9,14 +9,7 @@ export async function up({ context }) {
       allowNull: false,
     },
     name: {
-      type: DataTypes.ENUM(
-        "patient",
-        "psychologist",
-        "legal_representative",
-        "superAdmin",
-        "admin",
-        "developer"
-      ),
+      type: DataTypes.STRING(100),
       allowNull: false,
       unique: true,
     },
