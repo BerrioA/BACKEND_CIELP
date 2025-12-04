@@ -62,7 +62,6 @@ export const getAllPatients = async () => {
       };
     });
 
-    console.log(formattedPatients);
     return formattedPatients;
   } catch (error) {
     throw new Error("Error al obtener los pacientes: " + error.message);
