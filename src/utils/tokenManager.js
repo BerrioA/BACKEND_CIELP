@@ -1,28 +1,20 @@
 import jwt from "jsonwebtoken";
 
-// Función encargada de generar el Token
 export const generateToken = (uid, roleId) => {
   try {
-    const expiresIn = 60 * 15;
-
+    const expiresIn = 60 * 15; // 15 minutos
     const token = jwt.sign({ uid, roleId }, process.env.JWT_SECRET, {
       expiresIn,
     });
-
     return { token, expiresIn };
   } catch (error) {
-    console.log(
-      "Se ha presentado un error al intentar generar el generar el Token.",
-      error
-    );
-
-    return res.status(500).json({ message: error.message });
+    console.error("Error generando token:", error);
+    throw new Error("Error al generar el token");
   }
 };
 
-// Función encargada de generar el RefreshToken
 export const generateRefreshToken = (uid, roleId, res) => {
-  const expiresIn = 60 * 60 * 15;
+  const expiresIn = 60 * 60 * 15; // 15 horas en segundos
 
   try {
     const refreshToken = jwt.sign({ uid, roleId }, process.env.JWT_REFRESH, {
@@ -32,26 +24,19 @@ export const generateRefreshToken = (uid, roleId, res) => {
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      expires: new Date(Date.now() + expiresIn * 1000),
+      sameSite: "strict",
+      maxAge: expiresIn * 1000, // 15 horas en milisegundos
     });
   } catch (error) {
-    console.log(
-      "Se ha presentado un error al intentar generar el RefreshToken.",
-      error
-    );
-
-    return res.status(500).json({ message: error.message });
+    console.error("Error generando refresh token:", error);
+    throw new Error("Error al generar el refresh token");
   }
 };
 
-//Función encargada de retornar todo los erroes posibles en al momento de generar el JWT
 export const tokenVerificationErrors = {
-  "invalid signature":
-    "La firma del token es inválida. Asegúrate de utilizar una clave de firma correcta.",
-  "jwt expired":
-    "El token ha expirado. Solicita una nueva autenticación para continuar.",
-  "invalid token":
-    "El token proporcionado no es válido. Verifica su estructura y autenticidad.",
-  "jwt malformed":
-    "El formato del token es incorrecto. Asegúrate de enviar un JWT bien formado.",
+  "invalid signature": "La firma del JWT no es válida",
+  "jwt expired": "JWT expirado",
+  "invalid token": "Token no válido",
+  "No Bearer": "Utiliza formato Bearer",
+  "jwt malformed": "JWT mal formado",
 };

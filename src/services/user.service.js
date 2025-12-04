@@ -112,13 +112,11 @@ export const registerUser = async ({ userData, representativeData }) => {
 };
 
 
-
 export const getUserProfile = async (uid) => {
   const user = await User.findByPk(uid, {
     include: {
       model: Role,
-      as: "role",
-      attributes: ["role"],
+      attributes: ["name"],
     },
   });
 
@@ -128,13 +126,9 @@ export const getUserProfile = async (uid) => {
 
   return {
     uid: user.id,
-    name: user.name,
-    second_name: user.second_name,
-    last_name: user.last_name,
-    second_last_name: user.second_last_name,
-    gender: user.gender,
-    cellphone: user.cellphone,
+    given_name: user.given_name,
+    surname: user.surname,
     email: user.email,
-    role: user.role?.role,
+    role: user.role?.name,
   };
 };
