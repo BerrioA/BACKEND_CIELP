@@ -17,7 +17,7 @@ export const User = sequelize.define(
     },
     surname: {
       type: DataTypes.STRING(100),
-      allowNull: true,
+      allowNull: false,
     },
     phone: {
       type: DataTypes.STRING(20),

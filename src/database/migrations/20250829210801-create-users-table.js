@@ -11,11 +11,10 @@ export async function up({ context }) {
     given_name: {
       type: DataTypes.STRING(100),
       allowNull: false,
-      unique: true,
     },
     surname: {
       type: DataTypes.STRING(100),
-      allowNull: true,
+      allowNull: false,
     },
     phone: {
       type: DataTypes.STRING(20),
