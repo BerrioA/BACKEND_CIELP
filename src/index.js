@@ -13,7 +13,7 @@ async function main() {
 
     // await sequelize.sync({ alter: true });
 
-    // await migrator.up();
+    await migrator.up();
     // await seeder.up();
 
     if (NODE_ENV !== "test") {
