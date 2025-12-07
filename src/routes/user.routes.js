@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { createUser } from "../controllers/user.controller.js";
+import { registerPatient } from "../controllers/patient.controller.js";
 // import { userRegisterValidator } from "../middlewares/validation.middleware.js";
 
 const router = Router();
 
-router.post("/", createUser);
+router.post("/", registerPatient);
 
 export default router;

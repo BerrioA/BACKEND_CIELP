@@ -79,7 +79,7 @@ export const getOnePatient = async (id) => {
         {
           model: Role,
           where: {
-            name: "Paciente",
+            name: "patient",
           },
           attributes: ["id", "name"],
         },
