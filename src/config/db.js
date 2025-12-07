@@ -1,14 +1,22 @@
 import { Sequelize } from "sequelize";
-import { POSTGRES_URL } from "./env.js";
+import { POSTGRES_URL, NODE_ENV } from "./env.js";
 
-export const sequelize = new Sequelize(POSTGRES_URL, {
+const isProduction = NODE_ENV !== "development";
+
+const sequelizeOptions = {
   dialect: "postgres",
   protocol: "postgres",
-  dialectOptions: {
+  logging: false,
+};
+
+// Añadir SSL solo en producción
+if (isProduction) {
+  sequelizeOptions.dialectOptions = {
     ssl: {
       require: true,
-      rejectUnauthorized: false, // Importante para Render
+      rejectUnauthorized: false,
     },
-  },
-  logging: false,
-});
+  };
+}
+
+export const sequelize = new Sequelize(POSTGRES_URL, sequelizeOptions);
