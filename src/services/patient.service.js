@@ -1,8 +1,11 @@
+import { sequelize } from "../config/db.js";
 import { AdditionalInformation } from "../models/additional.information.model.js";
+import { LegalRepresentative } from "../models/legal.representative.model.js";
 import { Role } from "../models/roles.model.js";
 import { Service } from "../models/services.model.js";
 import { User } from "../models/user.model.js";
 
+// Servicio para obtener todos los pacientes
 export const getAllPatients = async () => {
   try {
     const patients = await User.findAll({
@@ -68,11 +71,10 @@ export const getAllPatients = async () => {
   }
 };
 
+// Servicio para obtener un paciente por ID
 export const getOnePatient = async (id) => {
   try {
     const { patientId } = id;
-
-    console.log(patientId);
 
     const patients = await User.findByPk(patientId, {
       include: [
@@ -81,20 +83,44 @@ export const getOnePatient = async (id) => {
           where: {
             name: "patient",
           },
-          attributes: ["id", "name"],
+          attributes: [],
+        },
+        {
+          model: AdditionalInformation,
+          attributes: [
+            "id",
+            "date_of_birth",
+            "sex",
+            "data_privacy_consent",
+            "psychological_treatment_consent",
+            "service_id",
+          ],
+          required: false,
+          include: [
+            {
+              model: Service,
+              attributes: ["id", "name"],
+              required: false,
+            },
+          ],
+        },
+      ],
+      include: [
+        {
+          model: LegalRepresentative,
+          attributes: ["id", "legal_representative_id"],
+          required: false,
         },
       ],
       attributes: [
         "id",
-        "name",
-        "second_name",
-        "last_name",
-        "second_last_name",
-        "gender",
-        "cellphone",
+        "given_name",
+        "surname",
+        "phone",
         "email",
+        "created_at",
       ],
-      order: [["name", "ASC"]],
+      order: [["given_name", "ASC"]],
     });
 
     return patients;

@@ -1,5 +1,6 @@
 import { authLogin, authLogout } from "../services/index.js";
 
+// Controlador para manejar el inicio de sesión
 export const login = async (req, res) => {
   try {
     const result = await authLogin(req.body, res);
@@ -14,6 +15,7 @@ export const login = async (req, res) => {
   }
 };
 
+// Controlador para manejar el cierre de sesión
 export const logout = async (req, res) => {
   try {
     const result = authLogout(req, res);
