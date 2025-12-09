@@ -1,3 +1,4 @@
+
 import { AdditionalInformation } from "../models/additional.information.model.js";
 import { LegalRepresentative } from "../models/legal.representative.model.js";
 import { Role } from "../models/roles.model.js";
@@ -153,19 +154,3 @@ export const getOnePatient = async (id) => {
   }
 };
 
-// Servicio para eliminar un paciente por ID
-export const deleteOnePatient = async (id) => {
-  try {
-    const { patientId } = id;
-
-    const patient = await User.findByPk(patientId);
-
-    if (!patient) return null;
-
-    await patient.destroy();
-
-    return true;
-  } catch (error) {
-    throw new Error("Error al eliminar el paciente: " + error.message);
-  }
-};
