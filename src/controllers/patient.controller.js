@@ -2,7 +2,6 @@ import { validationResult } from "express-validator";
 import { registerUser } from "../services/auth.service.js";
 import { getAllPatients, getOnePatient } from "../services/patient.service.js";
 
-
 // Controlador para registrar pacientes
 export const registerPatient = async (req, res) => {
   try {

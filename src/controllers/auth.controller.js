@@ -1,4 +1,17 @@
-import { authLogin, authLogout } from "../services/index.js";
+import { authLogin, authLogout, getUserProfile } from "../services/index.js";
+
+// Controlador para obtener el perfil del usuario autenticado
+export const profile = async (req, res) => {
+  try {
+    const profileData = await getUserProfile(req.uid);
+    return res.status(200).json(profileData);
+  } catch (error) {
+    console.error("Error al obtener el perfil del usuario:", error.message);
+
+    const statusCode = error.message === "Usuario no encontrado." ? 404 : 500;
+    return res.status(statusCode).json({ message: error.message });
+  }
+};
 
 // Controlador para manejar el inicio de sesión
 export const login = async (req, res) => {

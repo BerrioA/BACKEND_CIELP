@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { registerPatient } from "../controllers/patient.controller.js";
+import { registerPatient } from "../controllers/index.js";// import { registerPatient } from "../controllers/patient.controller.js";
 // import { userRegisterValidator } from "../middlewares/validation.middleware.js";
 
 const router = Router();

@@ -10,7 +10,7 @@ import {
 import { generateRefreshToken, generateToken } from "../utils/tokenManager.js";
 import { NODE_ENV } from "../config/env.js";
 
-// Servicio para registrar usuarios
+// Servicio para registrar usuarios (nuevo paciente, psicólogo, etc.)
 export const registerUser = async (
   { userData, representativeData },
   roleName = "patient"
@@ -136,6 +136,28 @@ export const registerUser = async (
     console.error("Error al registrar el usuario:", error.message);
     throw error;
   }
+};
+
+// Servicio para obtener el perfil de un usuario por su ID con base al token
+export const getUserProfile = async (uid) => {
+  const user = await User.findByPk(uid, {
+    include: {
+      model: Role,
+      attributes: ["name"],
+    },
+  });
+
+  if (!user) {
+    throw new Error("Usuario no encontrado.");
+  }
+
+  return {
+    uid: user.id,
+    given_name: user.given_name,
+    surname: user.surname,
+    email: user.email,
+    role: user.role?.name,
+  };
 };
 
 // Servicio para iniciar sesión

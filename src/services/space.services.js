@@ -1,5 +1,6 @@
 import { Space } from "../models/spaces.model.js";
 
+// Servicio para obtener todos los espacios
 export const getAllSpaces = async () => {
   try {
     const spaces = await Space.findAll({

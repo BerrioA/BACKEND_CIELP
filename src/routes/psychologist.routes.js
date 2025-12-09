@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { createPsychologist } from "../controllers/user.controller.js";
+import { registerPsychologist } from "../controllers/user.controller.js";
 // import { userRegisterValidator } from "../middlewares/validation.middleware.js";
 
 const router = Router();
 
-router.post("/", createPsychologist);
+router.post("/", registerPsychologist);
 
 export default router;

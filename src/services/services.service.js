@@ -1,5 +1,6 @@
 import { Service } from "../models/services.model.js";
 
+// Servicio para obtener todos los servicios
 export const getAllServices = async () => {
   try {
     const services = await Service.findAll({

@@ -1,4 +1,3 @@
-import { sequelize } from "../config/db.js";
 import { AdditionalInformation } from "../models/additional.information.model.js";
 import { LegalRepresentative } from "../models/legal.representative.model.js";
 import { Role } from "../models/roles.model.js";

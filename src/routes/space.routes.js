@@ -1,6 +1,5 @@
 import { Router } from "express";
-import { getSpaces } from "../controllers/spaces.controller.js";
-
+import { getSpaces } from "../controllers/index.js";
 const router = Router();
 
 router.get("/", getSpaces);
