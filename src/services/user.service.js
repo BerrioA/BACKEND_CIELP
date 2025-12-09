@@ -1,5 +1,5 @@
 import { Op } from "sequelize";
-import { User } from "../models/index.js";
+import { AdditionalInformation, Role, Service, User } from "../models/index.js";
 
 // Servicio para eliminar un usuario de cualquier rol
 export const deleteUser = async ({ userId, patientId }) => {
@@ -85,7 +85,7 @@ export const getUsersTrash = async () => {
     return formattedUsers;
   } catch (error) {
     throw new Error(
-      "Error al obtener los usuarios en papelera: " + error.message
+      "Error al intentar obtener los usuarios en papelera: " + error.message
     );
   }
 };

@@ -1,10 +1,11 @@
 import { validationResult } from "express-validator";
 import { registerUser } from "../services/auth.service.js";
 import {
+  deleteUser,
+  deleteUsersComplete,
   getAllPatients,
   getOnePatient,
-} from "../services/patient.service.js";
-import { deleteUser, deleteUsersComplete } from "../services/index.js";
+} from "../services/index.js";
 
 // Controlador para registrar pacientes
 export const registerPatient = async (req, res) => {
@@ -109,17 +110,3 @@ export const deletePatientComplete = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
-// Controlador para obtener todos los pacientes
-// export const getPatientsReciclaje = async (req, res) => {
-//   try {
-//     const deletedUsers = await getUsersTrash();
-//     res.status(200).json(deletedUsers);
-//   } catch (error) {
-//     console.error(
-//       "Se ha presentado un error al obtener intentar obtener los usuarios en papelera de reciclaje",
-//       error
-//     );
-//     res.status(500).json({ error: error.message });
-//   }
-// };

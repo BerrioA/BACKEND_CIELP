@@ -1,7 +1,7 @@
 import { validationResult } from "express-validator";
-import { registerUser } from "../services/index.js";
+import { getUsersTrash, registerUser } from "../services/index.js";
 
-// Nuevo controlador para registrar psicólogos usando el authService
+// Controlador para registrar administradores usando authService
 export const registerAdmin = async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -39,7 +39,7 @@ export const registerAdmin = async (req, res) => {
   }
 };
 
-// Nuevo controlador para registrar psicólogos usando el mismo servicio
+// Controlador para registrar psicólogos usando authService
 export const registerPsychologist = async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -75,5 +75,19 @@ export const registerPsychologist = async (req, res) => {
       .json({ message: "Psicólogo registrado exitosamente" });
   } catch (error) {
     return res.status(400).json({ error: error.message });
+  }
+};
+
+// Controlador para obtener todos los usuarios en papelera de reciclaje
+export const getAllUsersTrash = async (req, res) => {
+  try {
+    const deletedUsers = await getUsersTrash();
+    res.status(200).json(deletedUsers);
+  } catch (error) {
+    console.error(
+      "Se ha presentado un error al obtener intentar obtener los usuarios en papelera de reciclaje",
+      error
+    );
+    res.status(500).json({ error: error.message });
   }
 };
