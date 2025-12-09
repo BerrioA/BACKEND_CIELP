@@ -1,5 +1,6 @@
 import { getAllServices } from "../services/services.service.js";
 
+// Controlador para obtener todos los servicios
 export const getServices = async (req, res) => {
   try {
     const services = await getAllServices();

@@ -1,9 +1,13 @@
 import { Router } from "express";
-import { registerPatient } from "../controllers/index.js";// import { registerPatient } from "../controllers/patient.controller.js";
+import {
+  registerAdmin,
+  registerPsychologist,
+} from "../controllers/user.controller.js";
 // import { userRegisterValidator } from "../middlewares/validation.middleware.js";
 
 const router = Router();
 
-router.post("/", registerPatient);
+router.post("/psychologists", registerPsychologist);
+router.post("/admins", registerAdmin);
 
 export default router;

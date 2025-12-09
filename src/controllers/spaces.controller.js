@@ -1,5 +1,6 @@
 import { getAllSpaces } from "../services/space.services.js";
 
+// Controlador para obtener todos los espacios
 export const getSpaces = async (req, res) => {
   try {
     const spaces = await getAllSpaces();

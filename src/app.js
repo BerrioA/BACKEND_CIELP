@@ -4,9 +4,7 @@ import cors from "cors";
 import helmet from "helmet";
 import { corsOptions } from "./config/corsOptions.js";
 import userRoutes from "./routes/user.routes.js";
-import psychologistRoutes from "./routes/psychologist.routes.js";
 import patientRoutes from "./routes/partient.routes.js";
-// import userInformationRoutes from "./routes/user_information.routes.js";
 import servicesRoutes from "./routes/services.routes.js";
 import spacesRoutes from "./routes/space.routes.js";
 import authRoutes from "./routes/auth.routes.js";
@@ -24,9 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/cielp/v1/auth", authRoutes);
 app.use("/api/cielp/v1/users", userRoutes);
-app.use("/api/cielp/v1/psychologists", psychologistRoutes);
 app.use("/api/cielp/v1/patients", patientRoutes);
-// app.use("/api/cielp/v1/userInformation", userInformationRoutes);
 app.use("/api/cielp/v1/services", servicesRoutes);
 app.use("/api/cielp/v1/spaces", spacesRoutes);
 
