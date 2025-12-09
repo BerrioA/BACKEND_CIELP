@@ -76,7 +76,7 @@ export const getOnePatient = async (id) => {
   try {
     const { patientId } = id;
 
-    const patients = await User.findByPk(patientId, {
+    const patient = await User.findByPk(patientId, {
       include: [
         {
           model: Role,
@@ -104,12 +104,19 @@ export const getOnePatient = async (id) => {
             },
           ],
         },
-      ],
-      include: [
         {
           model: LegalRepresentative,
+          as: "legalRepresentatives",
           attributes: ["id", "legal_representative_id"],
           required: false,
+          include: [
+            {
+              model: User,
+              as: "legalRepresentativeUser",
+              attributes: ["id", "given_name", "surname", "email", "phone"],
+              required: false,
+            },
+          ],
         },
       ],
       attributes: [
@@ -120,11 +127,29 @@ export const getOnePatient = async (id) => {
         "email",
         "created_at",
       ],
-      order: [["given_name", "ASC"]],
     });
 
-    return patients;
+    const patientData = patient.toJSON();
+    const representanteInfo = patientData.legalRepresentatives;
+
+    return {
+      id: patientData.id,
+      given_name: patientData.given_name,
+      surname: patientData.surname,
+      phone: patientData.phone,
+      email: patientData.email,
+      created_at: patientData.created_at,
+      date_of_birth: patientData.additional_information?.date_of_birth,
+      sex: patientData.additional_information?.sex,
+      data_privacy_consent:
+        patientData.additional_information?.data_privacy_consent,
+      psychological_treatment_consent:
+        patientData.additional_information?.psychological_treatment_consent,
+      service_id: patientData.additional_information?.service_id,
+      service_name: patientData.additional_information?.service?.name,
+      legal_representative: representanteInfo[0]?.legalRepresentativeUser,
+    };
   } catch (error) {
-    throw new Error("Error al obtener los servicios: " + error.message);
+    throw new Error("Error al obtener el paciente: " + error.message);
   }
 };
