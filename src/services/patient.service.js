@@ -152,3 +152,20 @@ export const getOnePatient = async (id) => {
     throw new Error("Error al obtener el paciente: " + error.message);
   }
 };
+
+// Servicio para eliminar un paciente por ID
+export const deleteOnePatient = async (id) => {
+  try {
+    const { patientId } = id;
+
+    const patient = await User.findByPk(patientId);
+
+    if (!patient) return null;
+
+    await patient.destroy();
+
+    return true;
+  } catch (error) {
+    throw new Error("Error al eliminar el paciente: " + error.message);
+  }
+};

@@ -1,6 +1,10 @@
 import { validationResult } from "express-validator";
 import { registerUser } from "../services/auth.service.js";
-import { getAllPatients, getOnePatient } from "../services/patient.service.js";
+import {
+  deleteOnePatient,
+  getAllPatients,
+  getOnePatient,
+} from "../services/patient.service.js";
 
 // Controlador para registrar pacientes
 export const registerPatient = async (req, res) => {
@@ -54,6 +58,26 @@ export const getPatientById = async (req, res) => {
 
     const patient = await getOnePatient(patientId);
     res.status(200).json(patient);
+  } catch (error) {
+    console.error("Se ha presentado un error al obtener los pacientes", error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Controlador para eliminar un paciente
+export const deletePatient = async (req, res) => {
+  try {
+    const patientId = req.params;
+
+    const result = await deleteOnePatient(patientId);
+
+    if (!result) {
+      return res.status(401).json({ message: "Paciente no encontrado" });
+    }
+
+    return res
+      .status(200)
+      .json({ message: "Paciente eliminado correctamente" });
   } catch (error) {
     console.error("Se ha presentado un error al obtener los pacientes", error);
     res.status(500).json({ error: error.message });
