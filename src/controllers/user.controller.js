@@ -1,5 +1,34 @@
 import { validationResult } from "express-validator";
-import { getUsersTrash, registerUser } from "../services/index.js";
+import { getUsersTrash, registerUser, updateUser } from "../services/index.js";
+
+// Controlador para actualizar usuarios
+export const updateUsers = async (req, res) => {
+  try {
+    const { userId } = req.params; // Desestructurar correctamente
+    const dataUserUpdate = req.body;
+
+    const userToUpdate = await updateUser({ userId, dataUserUpdate });
+
+    // Verificar si hubo un error
+    if (userToUpdate.error) {
+      return res.status(404).json({ message: userToUpdate.error });
+    }
+
+    return res.status(200).json({
+      message: "Usuario actualizado correctamente",
+      user: userToUpdate,
+    });
+  } catch (error) {
+    console.error(
+      "Ha ocurrido un error al intentar actualizar el usuario:",
+      error
+    );
+    return res.status(500).json({
+      message: "Ha ocurrido un error al intentar actualizar el usuario",
+      error: error.message,
+    });
+  }
+};
 
 // Controlador para registrar administradores usando authService
 export const registerAdmin = async (req, res) => {

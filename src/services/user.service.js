@@ -1,6 +1,26 @@
 import { Op } from "sequelize";
 import { AdditionalInformation, Role, Service, User } from "../models/index.js";
 
+// Servicio para actualizar un usuario de cualquier rol
+export const updateUser = async ({ userId, patientId, dataUserUpdate }) => {
+  try {
+    const idToSearch = userId || patientId;
+
+    const user = await User.findByPk(idToSearch);
+
+    if (!user) {
+      return { error: "Usuario no encontrado" };
+    }
+
+    await user.update(dataUserUpdate);
+
+    return user;
+  } catch (error) {
+    console.error({ message: error });
+    throw new Error("Error al actualizar el usuario: " + error.message);
+  }
+};
+
 // Servicio para eliminar un usuario de cualquier rol
 export const deleteUser = async ({ userId, patientId }) => {
   try {

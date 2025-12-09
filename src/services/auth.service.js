@@ -34,7 +34,6 @@ export const registerUser = async (
   const transaction = await sequelize.transaction();
 
   try {
-    // Validar duplicados
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) throw new Error("El correo ya está registrado.");
 
@@ -44,20 +43,17 @@ export const registerUser = async (
     if (existingCell)
       throw new Error("El número de celular ya se encuentra registrado.");
 
-    // Validar servicio sólo si se provee (p. ej. paciente puede requerirlo)
     let service = null;
     if (service_id) {
       service = await Service.findByPk(service_id);
       if (!service)
         throw new Error("El servicio seleccionado no está disponible.");
     } else if (roleName === "patient") {
-      // Para pacientes insistir en service_id si tu modelo lo requiere
       throw new Error(
         "El servicio es requerido para el registro de pacientes."
       );
     }
 
-    // Roles dinámicos según roleName
     const role = await Role.findOne({ where: { name: roleName } });
     const roleRepresentative = await Role.findOne({
       where: { name: "legal_representative" },
@@ -65,10 +61,8 @@ export const registerUser = async (
 
     if (!role) throw new Error("El rol asignado no existe.");
 
-    // Hash si viene password
     const hashedPassword = password ? await bcryptjs.hash(password, 10) : null;
 
-    // Crear usuario (paciente, psicólogo, etc.)
     const newUser = await User.create(
       {
         given_name,
