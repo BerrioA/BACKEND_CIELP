@@ -1,8 +1,6 @@
 import { Router } from "express";
-import { login, logout, profile } from "../controllers/index.js";
-import { refreshToken } from "../controllers/refreshToken.controller.js";
-import { requireRefreshToken } from "../middlewares/auth/requireRefreshToken.js";
-import { requireToken } from "../middlewares/auth/requireToken.js";
+import { login, logout, profile, refreshToken } from "../controllers/index.js";
+import { requireToken, requireRefreshToken } from "../middlewares/index.js";
 
 const router = Router();
 
