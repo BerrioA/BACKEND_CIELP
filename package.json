@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "node --watch --env-file=.env ./src/index.js",
     "start": "node ./src/index.js",
-    "db:migrate": "umzug up",
-    "db:seed": "umzug seed"
+    "migrate": "node --env-file=.env ./src/utils/runMigrations.js",
+    "seed": "node --env-file=.env ./src/utils/runSeeders.js"
   },
   "keywords": [],
   "author": "",

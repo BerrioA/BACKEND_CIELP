@@ -19,7 +19,6 @@ app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
 
 // Rutas
-
 app.use("/api/cielp/v1/auth", authRoutes);
 app.use("/api/cielp/v1/users", userRoutes);
 app.use("/api/cielp/v1/patients", patientRoutes);
