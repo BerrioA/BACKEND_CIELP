@@ -5,6 +5,7 @@ export {
   getUserProfile,
 } from "./auth.service.js";
 export {
+  getAllUsers,
   updateUser,
   deleteUser,
   getUsersTrash,

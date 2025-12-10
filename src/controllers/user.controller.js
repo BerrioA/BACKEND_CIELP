@@ -1,11 +1,23 @@
 import { validationResult } from "express-validator";
 import {
+  getAllUsers,
   getUsersTrash,
   registerUser,
   updateAdditionalInformation,
   updateUser,
 } from "../services/index.js";
 import { sequelize } from "../config/db.js";
+
+// Controlador para obtener todos los usuarios
+export const getUsers = async (req, res) => {
+  try {
+    const users = await getAllUsers();
+    res.status(200).json(users);
+  } catch (error) {
+    console.error("Se ha presentado un error al obtener los usuarios", error);
+    res.status(500).json({ error: error.message });
+  }
+};
 
 // Controlador para actualizar usuarios e informacion adicional
 export const updateUsers = async (req, res) => {
@@ -168,5 +180,3 @@ export const getAllUsersTrash = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
-

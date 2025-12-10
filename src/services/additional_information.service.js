@@ -21,7 +21,7 @@ export const updateAdditionalInformation = async ({
     });
 
     if (!additionalInfo) {
-      return { error: "Información adicional no encontrada" };
+      return { error: "Información adicional de usuario no encontrada" };
     }
 
     await additionalInfo.update(dataAdditionalInformationUpdate, {

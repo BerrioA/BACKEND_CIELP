@@ -1,9 +1,10 @@
-
-import { AdditionalInformation } from "../models/additional.information.model.js";
-import { LegalRepresentative } from "../models/legal.representative.model.js";
-import { Role } from "../models/roles.model.js";
-import { Service } from "../models/services.model.js";
-import { User } from "../models/user.model.js";
+import {
+  Role,
+  User,
+  Service,
+  LegalRepresentative,
+  AdditionalInformation,
+} from "../models/index.js";
 
 // Servicio para obtener todos los pacientes
 export const getAllPatients = async () => {
@@ -153,4 +154,3 @@ export const getOnePatient = async (id) => {
     throw new Error("Error al obtener el paciente: " + error.message);
   }
 };
-

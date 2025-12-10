@@ -10,6 +10,7 @@ export {
 export { getServices } from "./services.controller.js";
 export { getSpaces } from "./spaces.controller.js";
 export {
+  getUsers,
   registerAdmin,
   updateUsers,
   registerPsychologist,

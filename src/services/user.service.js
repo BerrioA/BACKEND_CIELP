@@ -1,6 +1,69 @@
 import { Op } from "sequelize";
 import { AdditionalInformation, Role, Service, User } from "../models/index.js";
 
+// Servicio para obtener todos los usuarios
+export const getAllUsers = async () => {
+  try {
+    const patients = await User.findAll({
+      include: [
+        {
+          model: Role,
+          where: {
+            name: {
+              [Op.in]: ["psychologist", "admin", "developer"],
+            },
+          },
+          attributes: [],
+        },
+        {
+          model: AdditionalInformation,
+          attributes: [
+            "id",
+            "date_of_birth",
+            "sex",
+            "data_privacy_consent",
+            "psychological_treatment_consent",
+            "service_id",
+          ],
+          required: false,
+        },
+      ],
+      attributes: [
+        "id",
+        "given_name",
+        "surname",
+        "phone",
+        "email",
+        "created_at",
+      ],
+      order: [["given_name", "ASC"]],
+    });
+
+    const formattedPatients = patients.map((patient) => {
+      const patientData = patient.toJSON();
+
+      const additionalInfo = patientData.additional_information;
+
+      return {
+        id: patientData.id,
+        given_name: patientData.given_name,
+        surname: patientData.surname,
+        phone: patientData.phone,
+        email: patientData.email,
+        date_of_birth: additionalInfo?.date_of_birth || null,
+        sex: additionalInfo?.sex || null,
+        service_id: additionalInfo?.service_id || null,
+        service_name: additionalInfo?.service?.name || null,
+        created_at: patientData.created_at,
+      };
+    });
+
+    return formattedPatients;
+  } catch (error) {
+    throw new Error("Error al obtener los pacientes: " + error.message);
+  }
+};
+
 // Servicio para actualizar un usuario
 export const updateUser = async ({
   userId,
