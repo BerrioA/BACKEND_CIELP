@@ -2,9 +2,9 @@ import { Router } from "express";
 import {
   getAllUsersTrash,
   registerAdmin,
+  updateUsers,
   registerPsychologist,
 } from "../controllers/index.js";
-import { updateUsers } from "../controllers/user.controller.js";
 // import { userRegisterValidator } from "../middlewares/validation.middleware.js";
 
 const router = Router();

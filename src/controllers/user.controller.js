@@ -1,24 +1,72 @@
 import { validationResult } from "express-validator";
-import { getUsersTrash, registerUser, updateUser } from "../services/index.js";
+import {
+  getUsersTrash,
+  registerUser,
+  updateAdditionalInformation,
+  updateUser,
+} from "../services/index.js";
+import { sequelize } from "../config/db.js";
 
-// Controlador para actualizar usuarios
+// Controlador para actualizar usuarios e informacion adicional
 export const updateUsers = async (req, res) => {
+  const transaction = await sequelize.transaction();
+
   try {
-    const { userId } = req.params; // Desestructurar correctamente
-    const dataUserUpdate = req.body;
+    const { userId } = req.params;
+    const { dataUserUpdate, dataAdditionalInformationUpdate } = req.body;
 
-    const userToUpdate = await updateUser({ userId, dataUserUpdate });
-
-    // Verificar si hubo un error
-    if (userToUpdate.error) {
-      return res.status(404).json({ message: userToUpdate.error });
+    // Validar que al menos uno de los objetos tenga datos
+    if (!dataUserUpdate && !dataAdditionalInformationUpdate) {
+      await transaction.rollback();
+      return res.status(400).json({
+        message: "Debe proporcionar al menos un dato para actualizar",
+      });
     }
+
+    let userToUpdate = null;
+    let updateInformation = null;
+
+    // Actualizar usuario si se proporcionaron datos
+    if (dataUserUpdate && Object.keys(dataUserUpdate).length > 0) {
+      userToUpdate = await updateUser({
+        userId,
+        dataUserUpdate,
+        transaction,
+      });
+
+      if (userToUpdate.error) {
+        await transaction.rollback();
+        return res.status(404).json({ message: userToUpdate.error });
+      }
+    }
+
+    // Actualizar información adicional si se proporcionaron datos
+    if (
+      dataAdditionalInformationUpdate &&
+      Object.keys(dataAdditionalInformationUpdate).length > 0
+    ) {
+      updateInformation = await updateAdditionalInformation({
+        userId,
+        dataAdditionalInformationUpdate,
+        transaction,
+      });
+
+      if (updateInformation.error) {
+        await transaction.rollback();
+        return res.status(404).json({ message: updateInformation.error });
+      }
+    }
+
+    await transaction.commit();
 
     return res.status(200).json({
       message: "Usuario actualizado correctamente",
       user: userToUpdate,
+      additionalInformation: updateInformation,
     });
   } catch (error) {
+    await transaction.rollback();
+
     console.error(
       "Ha ocurrido un error al intentar actualizar el usuario:",
       error
@@ -120,3 +168,5 @@ export const getAllUsersTrash = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+

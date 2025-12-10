@@ -11,6 +11,7 @@ export { getServices } from "./services.controller.js";
 export { getSpaces } from "./spaces.controller.js";
 export {
   registerAdmin,
+  updateUsers,
   registerPsychologist,
   getAllUsersTrash,
 } from "./user.controller.js";

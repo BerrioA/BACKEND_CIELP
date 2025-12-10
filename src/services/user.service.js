@@ -1,18 +1,34 @@
 import { Op } from "sequelize";
 import { AdditionalInformation, Role, Service, User } from "../models/index.js";
 
-// Servicio para actualizar un usuario de cualquier rol
-export const updateUser = async ({ userId, patientId, dataUserUpdate }) => {
+// Servicio para actualizar un usuario
+export const updateUser = async ({
+  userId,
+  patientId,
+  dataUserUpdate,
+  transaction,
+}) => {
   try {
     const idToSearch = userId || patientId;
 
-    const user = await User.findByPk(idToSearch);
+    const user = await User.findByPk(idToSearch, {
+      attributes: [
+        "id",
+        "given_name",
+        "surname",
+        "phone",
+        "email",
+        "status",
+        "createdAt",
+      ],
+      transaction,
+    });
 
     if (!user) {
       return { error: "Usuario no encontrado" };
     }
 
-    await user.update(dataUserUpdate);
+    await user.update(dataUserUpdate, { transaction });
 
     return user;
   } catch (error) {
