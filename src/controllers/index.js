@@ -16,4 +16,5 @@ export {
   registerPsychologist,
   getAllUsersTrash,
   changePassword,
+  changeMePassword,
 } from "./user.controller.js";

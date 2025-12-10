@@ -244,3 +244,36 @@ export const updatePassword = async ({
     throw new Error("Error al actualizar la contraseña: " + error.message);
   }
 };
+
+// Servicio para actualizar contraseña de usuario logueado
+export const updateMePassword = async ({
+  userId,
+  newPassword,
+  oldPassword,
+}) => {
+  try {
+    const user = await User.findByPk(userId, {
+      attributes: ["id", "password"],
+    });
+
+    if (!user) {
+      return { error: "Usuario no encontrado" };
+    }
+
+    const comparePassword = await bcryptjs.compare(oldPassword, user.password);
+
+    if (!comparePassword) {
+      return { error: "Credenciales incorrectas." };
+    }
+
+    const hashedPassword = await bcryptjs.hash(newPassword, 10);
+
+    user.password = hashedPassword;
+    await user.save();
+
+    return { message: "Contraseña actiializada correctamente." };
+  } catch (error) {
+    console.error({ message: error });
+    throw new Error("Error al actualizar la contraseña: " + error.message);
+  }
+};

@@ -4,6 +4,7 @@ import {
   getUsersTrash,
   registerUser,
   updateAdditionalInformation,
+  updateMePassword,
   updatePassword,
   updateUser,
 } from "../services/index.js";
@@ -182,6 +183,7 @@ export const getAllUsersTrash = async (req, res) => {
   }
 };
 
+// Controlador para cambiar la contraseña de un usuario desde panel administrativo
 export const changePassword = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -194,6 +196,42 @@ export const changePassword = async (req, res) => {
     }
 
     const result = await updatePassword({
+      userId,
+      newPassword,
+      oldPassword,
+    });
+
+    if (result.error) {
+      return res.status(400).json({
+        message: result.error,
+      });
+    }
+
+    return res.status(200).json({
+      message: result.message,
+    });
+  } catch (error) {
+    console.error("Error al cambiar contraseña:", error);
+    return res.status(500).json({
+      message: "Ha ocurrido un error al intentar cambiar la contraseña",
+      error: error.message,
+    });
+  }
+};
+
+// Controlador para cambiar la contraseña de un usuario autenticado
+export const changeMePassword = async (req, res) => {
+  try {
+    const userId = req.uid;
+    const { newPassword, oldPassword } = req.body;
+
+    if (!newPassword || !oldPassword) {
+      return res.status(400).json({
+        message: "Debe proporcionar la contraseña actual y la nueva contraseña",
+      });
+    }
+
+    const result = await updateMePassword({
       userId,
       newPassword,
       oldPassword,

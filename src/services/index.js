@@ -11,6 +11,7 @@ export {
   getUsersTrash,
   deleteUsersComplete,
   updatePassword,
+  updateMePassword,
 } from "./user.service.js";
 export { getAllPatients, getOnePatient } from "./patient.service.js";
 export { getAllServices } from "./services.service.js";
