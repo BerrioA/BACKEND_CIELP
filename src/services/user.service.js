@@ -1,4 +1,5 @@
 import { Op } from "sequelize";
+import bcryptjs from "bcryptjs";
 import { AdditionalInformation, Role, Service, User } from "../models/index.js";
 
 // Servicio para obtener todos los usuarios
@@ -10,7 +11,7 @@ export const getAllUsers = async () => {
           model: Role,
           where: {
             name: {
-              [Op.in]: ["psychologist", "admin", "developer"],
+              [Op.in]: ["psychologist", "admin", "superAdmin", "developer"],
             },
           },
           attributes: [],
@@ -205,5 +206,41 @@ export const deleteUsersComplete = async ({ userId, patientId }) => {
     throw new Error(
       "Error al intentar eliminar el usuario definitivamente: " + error.message
     );
+  }
+};
+
+// Servicio para actualizar contraseña
+export const updatePassword = async ({
+  userId,
+  patientId,
+  newPassword,
+  oldPassword,
+}) => {
+  try {
+    const idToSearch = userId || patientId;
+
+    const user = await User.findByPk(idToSearch, {
+      attributes: ["id", "password"],
+    });
+
+    if (!user) {
+      return { error: "Usuario no encontrado" };
+    }
+
+    const comparePassword = await bcryptjs.compare(oldPassword, user.password);
+
+    if (!comparePassword) {
+      return { error: "La contraseña actual es incorrecta" };
+    }
+
+    const hashedPassword = await bcryptjs.hash(newPassword, 10);
+
+    user.password = hashedPassword;
+    await user.save();
+
+    return { message: "Contraseña actiializada correctamente." };
+  } catch (error) {
+    console.error({ message: error });
+    throw new Error("Error al actualizar la contraseña: " + error.message);
   }
 };

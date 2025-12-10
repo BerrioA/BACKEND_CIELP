@@ -5,6 +5,7 @@ import {
   registerAdmin,
   updateUsers,
   registerPsychologist,
+  changePassword,
 } from "../controllers/index.js";
 // import { userRegisterValidator } from "../middlewares/validation.middleware.js";
 
@@ -15,5 +16,6 @@ router.get("/trash", getAllUsersTrash);
 router.post("/psychologists", registerPsychologist);
 router.post("/admins", registerAdmin);
 router.patch("/:userId", updateUsers);
+router.patch("/:userId/password", changePassword);
 
 export default router;
