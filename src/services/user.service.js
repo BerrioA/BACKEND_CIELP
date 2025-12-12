@@ -14,7 +14,7 @@ export const getAllUsers = async () => {
               [Op.in]: ["psychologist", "admin", "superAdmin", "developer"],
             },
           },
-          attributes: [],
+          attributes: ["name"],
         },
         {
           model: AdditionalInformation,
@@ -51,6 +51,7 @@ export const getAllUsers = async () => {
         surname: patientData.surname,
         phone: patientData.phone,
         email: patientData.email,
+        role: patientData.role?.name || null,
         date_of_birth: additionalInfo?.date_of_birth || null,
         sex: additionalInfo?.sex || null,
         service_id: additionalInfo?.service_id || null,
